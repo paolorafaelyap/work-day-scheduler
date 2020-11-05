@@ -1,4 +1,7 @@
-let workDay = {
+//setting array for each time slot
+
+let workDay = 
+  {
     "8 AM": "",
     "9 AM": "",
     "10 AM": "",
@@ -11,24 +14,29 @@ let workDay = {
     "5 PM": "",
   };
   
+  //if-else statement to update task in calendar.
   $(document).ready(function(){
-    if(!localStorage.getItem('workDay')) {
+    if(!localStorage.getItem('workDay')) 
+    {
       updateCalendarTasks(workDay);
     } else {
       updateCalendarTasks(JSON.parse(localStorage.getItem('workDay')));
     }
   })
   
+  //displays current date
   $('#date-today h6').text(moment().format('dddd') + ", " + moment().format('MMMM Do YYYY, h:mm:ss a'));
   
   let counter = 1;
-  for(const property in workDay) {
+  for(const property in workDay) 
+  {
     let textEntry = "#text-entry" + counter;
     $(textEntry).text(workDay[property]);
     let timeId = "#time" + counter;
     let presentHour = moment().hour();
     let timeString = $(timeId).text();
     let timeNumber = hourNumberFromHourString(timeString);  
+    //determines which time slots are past, present, future hours
     if(timeNumber < presentHour) {
       $(textEntry).addClass("past-hour");
     } else if (timeNumber > presentHour) {
@@ -38,7 +46,7 @@ let workDay = {
     }
     counter ++;
   }
-  
+  //if save button is clicked, the text in certain timeslot is saved
   $("button").click(function() {
     value = $(this).siblings("textarea").val();
     hourString = $(this).siblings("div").text();
